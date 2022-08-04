@@ -6,7 +6,7 @@ import Dashboard from './Dashboard/Dashboard';
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard/>} />
+      {/* <Route path="/" element={<Dashboard/>} /> */}
     </Routes>
   )
 }
