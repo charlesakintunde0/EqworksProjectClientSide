@@ -1,4 +1,4 @@
-import { FETCH_EVENTS_PER_HOUR, FETCH_EVENTS_PER_DAY,FETCH_STATS_PER_HOUR,FETCH_STATS_PER_DAY } from "../constants/actionTypes";
+import { FETCH_EVENTS_PER_HOUR, FETCH_EVENTS_PER_DAY,FETCH_STATS_PER_HOUR,FETCH_STATS_PER_DAY,FETCH_POI, FETCH_STATS_POI, FETCH_EVENTS_POI } from "../constants/actionTypes";
 
 
 import * as api from "../api";
@@ -36,6 +36,37 @@ export const fetchStatsDaily = () => async(dispatch) => {
         const {data} = await api.fetchStatsDaily()
 
         dispatch({type: FETCH_STATS_PER_DAY, payload: data})
+    }catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+export const fetchPoi = () => async(dispatch) => {
+    try {
+        const {data} = await api.fetchPoi()
+
+        dispatch({type: FETCH_POI, payload: data})
+    }catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const fetchStatsPoi = () => async(dispatch) => {
+    try {
+        const {data} = await api.fetchStatsPoi()
+
+        dispatch({type: FETCH_STATS_POI, payload: data})
+    }catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const fetchEventsPoi = () => async(dispatch) => {
+    try {
+        const {data} = await api.fetchEventsPoi()
+
+        dispatch({type: FETCH_EVENTS_POI, payload: data})
     }catch (error) {
         console.log(error.message)
     }

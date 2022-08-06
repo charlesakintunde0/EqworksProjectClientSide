@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { useSelector} from 'react-redux';
 import ReactApexChart from 'react-apexcharts';
+import MUIDataTable from "mui-datatables";
 import {
   Box,
   Grid,
@@ -14,10 +15,11 @@ import {
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
+import * as tableData from '../TableData';
+import Map from '../Map/Map';
+import { Chart } from '../Chart';
 import moment from 'moment';
-
-
-import { SplineChart,DonutChart, RevenueChart, RevenueVsImpressionsChart, Chart } from '../Chart';
 
 
 const DashboardStyles = makeStyles(() =>
@@ -37,7 +39,23 @@ const DashboardStyles = makeStyles(() =>
       '& .apexcharts-canvas': {
 
       }
+    },
+    tablePaper: {
+      marginBottom: 25
+    },
+    dashboardMapPaper: {
+      marginTop: 20
+    
+    },
+    dashboardMapGrid : {
+      padding: 10
+    },
+    mapBox: {
+
     }
+    // dashboardMapBox: {
+    //   position: "absolute"
+    // }
   })
 );
 
@@ -46,8 +64,12 @@ const Dashboard = () => {
    const [metricsTime, setMetricTime] = useState('Hour')
    const [graphMetrics, setGraphMetrics] = useState('Clicks vs Revenue')
    const [selectedDate, setSelectedDate] = useState('Jan 1st 17')
+   const [selectedMapMetricsData, setSelectedMapMetricsData] = useState({
+     selectedMapDate: 'Jan 1, 2017',
+     selectedMapMetrics: 'Events',
+
+   })
     const chartData = useSelector(state => state)
-    console.log(chartData)
     const classes = DashboardStyles()
 
     const handleMetricTimeChange = (event) => {
@@ -62,6 +84,20 @@ const Dashboard = () => {
       setSelectedDate(event.target.value)
     }
 
+    const handleSelectedMapMetricsData = (event) => {
+      const value = event.target.value
+      setSelectedMapMetricsData({
+        ...selectedMapMetricsData,[event.target.name]: value
+      })
+    }
+
+    const PoiData = chartData?.poi
+
+    const EventsData = chartData?.events_per_day
+
+    const StatsData = chartData?.stats_per_day
+
+ 
   return (
     <Box className={classes.container}>
       
@@ -138,19 +174,92 @@ const Dashboard = () => {
           </Box>
         </Paper>
       </Grid>
-    {/* <Grid item lg={4} xs={12}>
-    <Paper>
-      <ReactApexChart 
-       {...DonutChart(data.stats_per_day)} type="pie" />
-        </Paper>
+   <Grid item xs= {12}>
+    <Paper className={classes.dashboardMainGraphPaper}>
+    <MUIDataTable
+          title={"POI TABLE"}
+          data={PoiData}
+          columns={tableData.PoiColumns}
+          options={tableData.PoiOptions}
+          
+        />
+    </Paper>
     </Grid>
-    <Grid item lg={4} xs={12}>
-    <Paper>
-      <ReactApexChart 
-       {...RevenueChart(data.stats_per_day)} type='line' />
+   <Grid item xs={12}>
+   <Paper className={classes.dashboardMainGraphPaper}>
+    <MUIDataTable
+          title={"Events Per Day"}
+          data={EventsData}
+          columns={tableData.EventColumns}
+          options={tableData.eventsOptions}
+          
+        />
+ </Paper>
+   </Grid>
+  
+       <Grid item xs={12}>
+        <Paper className={classes.dashboardMainGraphPaper}>
+        <MUIDataTable
+          title={"Stats Per Day"}
+          data={StatsData}
+          columns={tableData.statsColumn}
+          options={tableData.eventsOptions}
+          
+        />
+   
         </Paper>
-    </Grid> */}
-    </Grid>
+       </Grid>
+
+       <Grid className={classes.dashboardMapPaper} item xs={12}>
+        <Paper className={classes.dashboardMapPaper}>
+
+          <Box className={classes.dashboardMapBox}>
+          <Grid container className={classes.dashboardMapGrid} spacing={3}>
+            <Grid item xs={4}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Select Event Day</InputLabel>
+                <Select
+                 labelId="demo-simple-select-label"
+                 id="demo-simple-select"
+                 value={selectedMapMetricsData.selectedMapDate}
+                 label="graphTime"
+                 name = "selectedMapDate"
+                 onChange={handleSelectedMapMetricsData}>
+                 {
+                  chartData.events_per_day.map(eventData => (
+                    <MenuItem value={moment(eventData.date).format('ll')}>{moment(eventData.date).format('ll')}</MenuItem>
+                  ))
+                
+                 }
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={4}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Geo Visualize by</InputLabel>
+                <Select
+                 labelId="demo-simple-select-label"
+                 id="demo-simple-select"
+                 value={selectedMapMetricsData.selectedMapMetrics}
+                 label="graphTime"
+                 name = "selectedMapMetrics"
+                 onChange={handleSelectedMapMetricsData}>   
+                    <MenuItem value="Events">Events</MenuItem>
+                    <MenuItem value="Stats">Stats</MenuItem>
+                  
+              
+                </Select>
+              </FormControl>
+            </Grid>
+            </Grid>
+          <Box className="mapBox">
+          <Map data={chartData} selectedMapMetricsData={selectedMapMetricsData}/>
+          </Box>
+          </Box>
+        </Paper>
+       </Grid>
+   </Grid>
     </Box>
   )
 }
