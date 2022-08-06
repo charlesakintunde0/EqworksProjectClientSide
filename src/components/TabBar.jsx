@@ -10,11 +10,14 @@ import {
 import { makeStyles } from '@mui/styles';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import {useSelector } from 'react-redux'
 
 
 import ChartTab from './Tabs/ChartTab';
 import MapTab from './Tabs/MapTab';
 import DataTables from './Tabs/DataTables';
+
+import LoadingModal from './LoadingModal/LoadingModal'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -64,12 +67,14 @@ const TabsStyles = makeStyles(() =>
 const TabBar = () => {
     const classes = TabsStyles()
     const [value, setValue] = React.useState(0);
-
+    const data = useSelector(state => state.poi)
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
   
   return (
+    <>
+  {/* {data.length < 0 ? '' : <LoadingModal/>} */}
      <Box className={classes.tabsContainer}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -88,6 +93,7 @@ const TabBar = () => {
         <DataTables/>
       </TabPanel>
      </Box>
+    </>
   )
 }
 

@@ -31,7 +31,7 @@ import {
     dashboardMainGraphPaper: {
       padding:50,
       // height:450,
-      width: '70%',
+      width: '80%',
       margin:'auto',
 
     },

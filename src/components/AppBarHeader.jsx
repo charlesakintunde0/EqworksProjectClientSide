@@ -37,7 +37,7 @@ const AppBarHeader = () => {
    <Box className={classes.appBarBox}>
       <AppBar className={classes.appBar} color="primary">
         <Typography className={classes.headerText} variant="h1">
-          ENCHANCE
+          EQWORKS VISUALIZATION PROJECT
         </Typography>
       </AppBar>
    </Box>

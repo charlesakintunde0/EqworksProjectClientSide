@@ -1,14 +1,14 @@
 import './App.css';
 import { BrowserRouter }from "react-router-dom";
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 
 import { fetchEventsHourly, fetchEventsDaily,fetchStatsHourly,fetchStatsDaily, fetchPoi,fetchStatsPoi,fetchEventsPoi} from './actions/index'
-import Router from './components/Router';
+
 import AppBarHeader from './components/AppBarHeader';
-import SideBar from './components/SideBar';
+
 import TabBar from './components/TabBar';
 
-
+import LoadingModal from './components/LoadingModal/LoadingModal';
 import { ThemeProvider, createTheme } from '@mui/material/styles'; 
 
 const theme = createTheme({
@@ -26,7 +26,6 @@ const theme = createTheme({
 
 function App() {
   const dispatch = useDispatch()
-
   dispatch(fetchEventsHourly())
   dispatch(fetchEventsDaily())
   dispatch(fetchStatsHourly())
@@ -37,10 +36,11 @@ function App() {
   return (
       <ThemeProvider theme ={theme}>
          <BrowserRouter>
-
+       
          <AppBarHeader/>
          {/* <SideBar/> */}
         <div  className="App">
+           {/* <LoadingModal/> */}
           <TabBar/>
         </div>
        </BrowserRouter>
