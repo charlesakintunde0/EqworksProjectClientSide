@@ -2,13 +2,11 @@ import React, {useState} from 'react'
 import {
   Box,
   createStyles,
-  Paper,
   Tab,
   Tabs,
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import {useSelector } from 'react-redux'
 
@@ -74,23 +72,24 @@ const TabBar = () => {
   
   return (
     <>
-  {/* {data.length < 0 ? '' : <LoadingModal/>} */}
+  {data.length === 0 ? <LoadingModal/> : ''}
      <Box className={classes.tabsContainer}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Maps" {...a11yProps(0)} />
-          <Tab label="Charts" {...a11yProps(1)} />
-          <Tab label="Datatables" {...a11yProps(2)} />
+          <Tab label="Charts" {...a11yProps(0)} />
+          <Tab label="Datatables" {...a11yProps(1)} />
+          <Tab label="Maps" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <MapTab/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
       <ChartTab/>
       </TabPanel>
+      <TabPanel value={value} index={1}>
+      <DataTables/>
+      </TabPanel>
       <TabPanel value={value} index={2}>
-        <DataTables/>
+       
+        <MapTab/>
       </TabPanel>
      </Box>
     </>

@@ -1,21 +1,13 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { useSelector} from 'react-redux';
-import ReactApexChart from 'react-apexcharts';
 import MUIDataTable from "mui-datatables";
 import {
     Box,
     Grid,
     createStyles,
-  
-    Paper, 
-    MenuItem,
-    FormControl,
-    InputLabel,
-    Select,
-    Typography
   } from '@mui/material';
   import { makeStyles } from '@mui/styles';
-  import moment from 'moment';
+ 
 
   import * as tableData from '../TableData'
 
@@ -23,7 +15,7 @@ import {
   const DatatableTabTabStyles = makeStyles(() =>
   createStyles({
     tablePaper: {
-      marginBottom: 25
+      marginBottom: 40
     },
     dashboardMapPaper: {
       marginTop: 40
@@ -36,7 +28,7 @@ import {
 
     },
     datatableGridItem: {
-        marginBottom: 20
+        marginBottom: 40
     }
     // dashboardMapBox: {
     //   position: "absolute"
@@ -69,7 +61,7 @@ const DataTables = () => {
    <Grid className={classes.datatableGridItem} item xs={12}>
    <Box className={classes.datatableGridItem}>
     <MUIDataTable
-          title={"Events Per Day"}
+          title={"EVENTS TABLE"}
           data={EventsData}
           columns={tableData.EventColumns}
           options={tableData.eventsOptions}
@@ -81,7 +73,7 @@ const DataTables = () => {
        <Grid className={classes.datatableGridItem} item xs={12}>
        <Box className={classes.datatableGridItem}>
         <MUIDataTable
-          title={"Stats Per Day"}
+          title={"STATS TABLE"}
           data={StatsData}
           columns={tableData.statsColumn}
           options={tableData.StatsOptions}

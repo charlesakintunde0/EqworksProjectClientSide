@@ -10,11 +10,10 @@ import {
     MenuItem,
     FormControl,
     InputLabel,
-    Select,
-    Typography
+    Select
   } from '@mui/material';
   import { makeStyles } from '@mui/styles';
-  import moment from 'moment';
+  
 
 
   import { Chart } from '../Chart'
@@ -31,7 +30,7 @@ import {
     dashboardMainGraphPaper: {
       padding:50,
       // height:450,
-      width: '80%',
+      width: '65%',
       margin:'auto',
 
     },
@@ -54,13 +53,9 @@ import {
 const ChartTab = () => {
   const classes = ChartTabStyles()
   const [metricsTime, setMetricTime] = useState('Hour')
-  const [graphMetrics, setGraphMetrics] = useState('Clicks vs Revenue')
+  const [graphMetrics, setGraphMetrics] = useState('Clicks')
   const [selectedDate, setSelectedDate] = useState('Jan 1st 17')
-  const [selectedMapMetricsData, setSelectedMapMetricsData] = useState({
-    selectedMapDate: 'Jan 1, 2017',
-    selectedMapMetrics: 'Events',
 
-  })
    const chartData = useSelector(state => state)
 
    const handleMetricTimeChange = (event) => {
@@ -110,6 +105,7 @@ const ChartTab = () => {
                  label="graphTime"
                  onChange={handleGraphMetricsChange}>
             <MenuItem value={'Clicks vs Revenue'}>Clicks vs Revenue</MenuItem>
+            <MenuItem value={'Events Vs Clicks'}>Events vs Clicks</MenuItem>
             <MenuItem value={'Clicks'}>Clicks</MenuItem>
             <MenuItem value={'Impressions'}>Impressions</MenuItem>
             <MenuItem value={'Revenue'}>Revenue</MenuItem>

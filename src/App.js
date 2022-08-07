@@ -5,10 +5,7 @@ import { useDispatch} from 'react-redux';
 import { fetchEventsHourly, fetchEventsDaily,fetchStatsHourly,fetchStatsDaily, fetchPoi,fetchStatsPoi,fetchEventsPoi} from './actions/index'
 
 import AppBarHeader from './components/AppBarHeader';
-
 import TabBar from './components/TabBar';
-
-import LoadingModal from './components/LoadingModal/LoadingModal';
 import { ThemeProvider, createTheme } from '@mui/material/styles'; 
 
 const theme = createTheme({
@@ -26,6 +23,9 @@ const theme = createTheme({
 
 function App() {
   const dispatch = useDispatch()
+
+
+  // FETCH DATA FROM BACKEND
   dispatch(fetchEventsHourly())
   dispatch(fetchEventsDaily())
   dispatch(fetchStatsHourly())
