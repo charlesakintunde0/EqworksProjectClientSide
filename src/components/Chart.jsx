@@ -1,4 +1,3 @@
-import { ApexOptions } from 'apexcharts';
 import moment from 'moment'
 
 
@@ -66,14 +65,14 @@ const xaxisType = () => {
     options: {
       chart: {
         height: 350,
-        type: 'line',
+        type: 'area',
         stacked: true,
       },
       dataLabels: {
         enabled: false
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'straight'
       },
       xaxis: {
         type: xaxisType(),
@@ -88,6 +87,53 @@ const xaxisType = () => {
           formatter: (val) => {
             if (typeof val !== 'undefined') {
               return `${val < 1000 ? val: `${Math.round((val/1000) * 10)/10}K`} `;
+            }
+            return val;
+          },
+        },
+      },
+    },
+  
+  
+  };
+
+
+
+  const EventsVsClicksChartData = {
+    series: [{
+      name: 'Impressions(In thousands)',
+      type: 'area',
+      data: globalStatsData().map(data =>data.impressions/1000),
+    }, {
+      name: 'Clicks',
+      type: 'area',
+      data: globalStatsData().map(data => Math.round(data.clicks))
+    }],
+    options: {
+      chart: {
+        height: 350,
+        type: 'line',
+        stacked: true,
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      xaxis: {
+        type: xaxisType(),
+        categories: statsXaxis()
+      },
+      tooltip: {
+        intersect: false,
+        labels: {
+          format: 'dd/MM/yy HH:mm'
+      },
+        y: {
+          formatter: (val) => {
+            if (typeof val !== 'undefined') {
+              return `${`${Math.round((val*10))/10}`} `;
             }
             return val;
           },
@@ -159,7 +205,7 @@ const xaxisType = () => {
         curve: 'smooth'
       },
       xaxis: {
-        type: 'datetime',
+        type: xaxisType(),
         categories: statsXaxis()
       },
       tooltip: {
@@ -242,7 +288,7 @@ const xaxisType = () => {
         enabled: false
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'straight'
       },
       xaxis: {
         type: 'datetime',
@@ -281,6 +327,9 @@ const xaxisType = () => {
     return EventsChartData
   }else if (metrics === 'Impressions Vs Clicks'){
     return EventsChartData
+  }
+  else if (metrics === 'Events Vs Clicks'){
+    return EventsVsClicksChartData
   }
 }
 
